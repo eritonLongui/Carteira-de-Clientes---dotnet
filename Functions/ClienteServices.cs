@@ -121,7 +121,18 @@ public class ClienteServices
         if (escolha > 0 && escolha <= resultados.Count)
         {
             Cliente escolhido = resultados[escolha - 1];
-            return escolhido;
+
+            Console.WriteLine($"Você selecionou {escolhido.Nome} {escolhido.Tipo} - {escolhido.Email}\n");
+            Console.WriteLine("Deseja prosseguir? (y/n)\n");
+
+            if (Console.ReadLine()!.ToLower() == "y")
+            {
+                return escolhido;
+            }
+            else
+            {
+                return null;
+            }
         }
         else
         {
@@ -130,20 +141,103 @@ public class ClienteServices
         }
     }
 
-    public void VerificarCliente()   // mostrar detalhes específicos
+    public void VerificarCliente(List<Cliente> clientes)
     {
         Console.Clear();
         var clienteSelecionado = SelecionarCliente(clientes);
+        if (clienteSelecionado == null) return;
+
+        Console.WriteLine($"O cliente {clienteSelecionado.Nome} {clienteSelecionado.Tipo} está cadastrado desde {clienteSelecionado.DataCadastro}");
+
+        if (clienteSelecionado.HistoricoCompras.Count == 1)
+        {
+            Console.WriteLine($"Foi realizada 1 compra.");
+        }
+        else if (clienteSelecionado.HistoricoCompras.Count > 0)
+        {
+            Console.WriteLine($"Foram realizadas {clienteSelecionado.HistoricoCompras.Count} compras.");
+        }
+        else
+        {
+            Console.WriteLine("Não foi realizada nehuma compra.");
+        }
     }
 
-    public void EditarCliente()   // confirmar e escolher parâmetro de edição
+    public void EditarCliente(List<Cliente> clientes)
     {
         Console.Clear();
+        var clienteSelecionado = SelecionarCliente(clientes);
+        if (clienteSelecionado == null) return;
+
+        Console.WriteLine("Digite a opção que deseja editar\n1- Nome\n2- E-mail\n3- Telefone");
+        int opcao = int.Parse(Console.ReadLine()!);
+
+        switch (opcao)
+        {
+            case 1:
+                Console.WriteLine("Digite o novo nome: ");
+                string novoNome = Console.ReadLine()!;
+
+                Console.WriteLine($"Você deseja alterar o nome {clienteSelecionado.Nome} para {novoNome}?\n\nDigite 1 para confirmar.\n");
+
+                if (Console.ReadLine()! == "1")
+                {
+                    clienteSelecionado.MudarNome(novoNome);
+                }
+                else
+                {
+                    Console.WriteLine("Alteração não realizada.");
+                }
+
+                break;
+            case 2:
+                Console.WriteLine("Digite o novo E-mail: ");
+                string novoEmail = Console.ReadLine()!;
+
+                Console.WriteLine($"Você deseja alterar o e-mail {clienteSelecionado.Email} para {novoEmail}?\n\nDigite 1 para confirmar.\n");
+
+                if (Console.ReadLine()! == "1")
+                {
+                    clienteSelecionado.Email = novoEmail;
+                }
+                else
+                {
+                    Console.WriteLine("Alteração não realizada.");
+                }
+
+                break;
+            case 3:
+                Console.WriteLine("Digite o novo telefone: ");
+                string novoTelefone = Console.ReadLine()!;
+
+                Console.WriteLine($"Você deseja alterar o telefone {clienteSelecionado.Telefone} para {novoTelefone}?\n\nDigite 1 para confirmar.\n");
+
+                if (Console.ReadLine()! == "1")
+                {
+                    clienteSelecionado.Telefone = novoTelefone;
+                }
+                else
+                {
+                    Console.WriteLine("Alteração não realizada.");
+                }
+
+                break;
+        }
     }
 
-    public void RemoverCliente()   // confirmar cliente selecionado
+    public void RemoverCliente(List<Cliente> clientes)
     {
         Console.Clear();
+        var clienteSelecionado = SelecionarCliente(clientes);
+        if (clienteSelecionado == null) return;
+
+        Console.Write($"Você tem certeza que deseja remover o {clienteSelecionado.Nome}? (y/n): ");
+
+        if (Console.ReadLine()!.ToLower() == "y")
+        {
+            clientes.Remove(clienteSelecionado);
+            Console.WriteLine($"O cliente {clienteSelecionado} foi removido com sucesso!");
+        }
     }
 }
 
