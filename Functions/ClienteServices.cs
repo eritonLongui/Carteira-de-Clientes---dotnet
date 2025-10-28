@@ -37,9 +37,9 @@ public class ClienteServices
             string generoCliente = Console.ReadLine()!;
 
 
-            ClientePf clientepf = new ClientePf(nomeCliente, emailCliente, telefoneCliente, "Pessoa física", nascimentoCliente, generoCliente);
+            ClientePf clientepf = new ClientePf(nomeCliente, emailCliente, telefoneCliente, "PF", nascimentoCliente, generoCliente);
             clientes.Add(clientepf);
-            
+
             Console.WriteLine("Cliente adicionado com sucesso!");
         }
         else if (tipoCliente == "2")
@@ -58,9 +58,9 @@ public class ClienteServices
             string funcionariosEmpresa = Console.ReadLine()!;
             int numeroFuncionarios = int.Parse(funcionariosEmpresa);
 
-            ClientePj clientepj = new ClientePj(nomeEmpresa, emailEmpresa, telefoneEmpresa, "Pessoa Jurídica", cnpjEmpresa, numeroFuncionarios);
+            ClientePj clientepj = new ClientePj(nomeEmpresa, emailEmpresa, telefoneEmpresa, "PJ", cnpjEmpresa, numeroFuncionarios);
             clientes.Add(clientepj);
-            
+
             Console.WriteLine("Cliente adicionado com sucesso!");
         }
         else
@@ -72,11 +72,78 @@ public class ClienteServices
     public void ListarClientes()
     {
         Console.Clear();
-        Console.WriteLine("Lista de clientes cadastrados:\n");
+
+        int totalClientes = clientes.Count();
+        Console.WriteLine("Exibindo {totalClientes} clientes cadastrados:\n");
 
         foreach (var cliente in clientes)
         {
-            Console.WriteLine($"{cliente.Nome}");
+            if (cliente.Tipo == "PF")
+            {
+                Console.WriteLine($"Pessoa física - {cliente.Nome} {cliente.Email}");
+            }
+            else if (cliente.Tipo == "PJ")
+            {
+                Console.WriteLine($"Pessoa jurídica - {cliente.Nome} {cliente.Email}");
+            }
         }
     }
+
+    static Cliente SelecionarCliente(List<Cliente> clientes)
+    {
+        Console.Clear();
+        Console.WriteLine("Pesquisar cliente por:\n1- Nome\n2- E-mail\n3- Telefone\n\n");
+        string opcao = Console.ReadLine()!;
+
+        if (opcao != "1" && opcao != "2" && opcao != "3")
+        {
+            Console.WriteLine("Opção inválida!");
+            return null;
+        }
+
+        var resultados = clientes
+            .Where(c => c.Nome.Contains(opcao))
+            .ToList();
+
+        if (resultados.Count == 0)
+        {
+            Console.WriteLine("Nenhum cliente encontrado.");
+            return null;
+        }
+
+        for (int i = 0; i < resultados.Count; i++)
+        {
+            Console.WriteLine($"{i + 1}. {resultados[i].Nome} - {resultados[i].Email} {resultados[i].Tipo}");
+        }
+
+        Console.WriteLine("\nDigite o número do cliente desejado: ");
+        var escolha = int.Parse(Console.ReadLine()!);
+        if (escolha > 0 && escolha <= resultados.Count)
+        {
+            Cliente escolhido = resultados[escolha - 1];
+            return escolhido;
+        }
+        else
+        {
+            Console.WriteLine("Escolha inválida");
+            return null;
+        }
+    }
+
+    public void VerificarCliente()   // mostrar detalhes específicos
+    {
+        Console.Clear();
+        var clienteSelecionado = SelecionarCliente(clientes);
+    }
+
+    public void EditarCliente()   // confirmar e escolher parâmetro de edição
+    {
+        Console.Clear();
+    }
+
+    public void RemoverCliente()   // confirmar cliente selecionado
+    {
+        Console.Clear();
+    }
 }
+
