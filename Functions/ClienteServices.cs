@@ -28,8 +28,29 @@ public class ClienteServices
             string emailCliente = Console.ReadLine()!;
             Console.WriteLine("Digite o telefone de contato: ");
             string telefoneCliente = Console.ReadLine()!;
+
             Console.WriteLine("Digite CEP: ");
-            string localizacaoCliente = Console.ReadLine()!;
+            string cep = Console.ReadLine()!;
+            var endereco = Endereco.ObterPorCepAsync(cep).GetAwaiter().GetResult();
+
+            if (endereco == null)
+            {
+                Console.WriteLine("CEP inválido ou não encontrado");
+                return;
+            }
+
+            Console.WriteLine($"\nEndereço encontrado:");
+            Console.WriteLine($"{endereco.Logradouro}, {endereco.Bairro}, {endereco.Localidade} - {endereco.Uf}\n\n");
+
+            Console.Write("Deseja confirmar esse endereço? (y/n): ");
+            string confirmar = Console.ReadLine()!.ToLower();
+
+            if (confirmar != "y")
+            {
+                Console.WriteLine("Cadastro cancelado.");
+                return;
+            }
+
             Console.WriteLine("Digite a data de nascimento: ");
             string nascimentoCliente = Console.ReadLine()!;
             Console.WriteLine("Selecione o genero: ");
@@ -50,8 +71,29 @@ public class ClienteServices
             string emailEmpresa = Console.ReadLine()!;
             Console.WriteLine("Digite o telefone de contato: ");
             string telefoneEmpresa = Console.ReadLine()!;
+
             Console.WriteLine("Digite CEP: ");
-            string localizacaoEmpresa = Console.ReadLine()!;
+            string cep = Console.ReadLine()!;
+            var endereco = Endereco.ObterPorCepAsync(cep).GetAwaiter().GetResult();
+
+            if (endereco == null)
+            {
+                Console.WriteLine("CEP inválido ou não encontrado");
+                return;
+            }
+
+            Console.WriteLine($"\nEndereço encontrado:");
+            Console.WriteLine($"{endereco.Logradouro}, {endereco.Bairro}, {endereco.Localidade} - {endereco.Uf}\n\n");
+
+            Console.Write("Deseja confirmar esse endereço? (y/n): ");
+            string confirmar = Console.ReadLine()!.ToLower();
+
+            if (confirmar != "y")
+            {
+                Console.WriteLine("Cadastro cancelado.");
+                return;
+            }
+
             Console.WriteLine("Digite CNPJ da empresa: ");
             string cnpjEmpresa = Console.ReadLine()!;
             Console.WriteLine("Digite o número de funcionários: ");
@@ -74,7 +116,7 @@ public class ClienteServices
         Console.Clear();
 
         int totalClientes = clientes.Count();
-        Console.WriteLine("Exibindo {totalClientes} clientes cadastrados:\n");
+        Console.WriteLine($"Exibindo {totalClientes} clientes cadastrados:\n");
 
         foreach (var cliente in clientes)
         {
