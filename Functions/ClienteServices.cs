@@ -143,52 +143,60 @@ public class ClienteServices
     {
         Console.Clear();
         Console.WriteLine("Pesquisar cliente por:\n1- Nome\n2- E-mail\n3- Telefone\n");
+
+        Console.Write("Escolha: ");
         string opcao = Console.ReadLine()!;
 
-        if (opcao != "1" && opcao != "2" && opcao != "3")
+        Func<Cliente, string>? campoPesquisa = opcao switch
+        {
+            "1" => c => c.Nome,
+            "2" => c => c.Email,
+            "3" => c => c.Telefone,
+            _ => null
+        };
+
+        if (campoPesquisa == null)
         {
             Console.WriteLine("Opção inválida!");
             return null;
         }
 
+        Console.Write("\nDigite o termo para pesquisa: ");
+        string termo = Console.ReadLine()!.Trim();
+
         var resultados = clientes
-            .Where(c => c.Nome.Contains(opcao))
+            .Where(c => campoPesquisa(c).Contains(termo, StringComparison.OrdinalIgnoreCase))
             .ToList();
 
         if (resultados.Count == 0)
         {
-            Console.WriteLine("Nenhum cliente encontrado.");
+            Console.WriteLine("\nNenhum cliente encontrado.");
             return null;
         }
+
+        Console.WriteLine("\nClientes encontrados:\n");
 
         for (int i = 0; i < resultados.Count; i++)
         {
-            Console.WriteLine($"{i + 1}. {resultados[i].Nome} - {resultados[i].Email} {resultados[i].Tipo}");
+            Console.WriteLine($"{i + 1}. {resultados[i].Nome} - {resultados[i].Email} - ({resultados[i].Tipo})");
         }
 
-        Console.WriteLine("\nDigite o número do cliente desejado: ");
-        var escolha = int.Parse(Console.ReadLine()!);
-        if (escolha > 0 && escolha <= resultados.Count)
+        Console.Write("\nDigite o número do cliente desejado: ");
+        if (!int.TryParse(Console.ReadLine(), out int escolha) ||
+            escolha < 1 || escolha > resultados.Count)
         {
-            Cliente escolhido = resultados[escolha - 1];
-
-            Console.WriteLine($"Você selecionou {escolhido.Nome} {escolhido.Tipo} - {escolhido.Email}\n");
-            Console.WriteLine("Deseja prosseguir? (y/n)\n");
-
-            if (Console.ReadLine()!.ToLower() == "y")
-            {
-                return escolhido;
-            }
-            else
-            {
-                return null;
-            }
-        }
-        else
-        {
-            Console.WriteLine("Escolha inválida");
+            Console.WriteLine("Escolha inválida!");
             return null;
         }
+
+        var selecionado = resultados[escolha - 1];
+
+        Console.WriteLine($"\nVocê selecionou: {selecionado.Nome} - {selecionado.Email}");
+        Console.Write("Confirmar? (y/n): ");
+
+        return Console.ReadLine()!.ToLower() == "y"
+            ? selecionado
+            : null;
     }
 
     public void VerificarCliente(List<Cliente> clientes)
@@ -219,7 +227,7 @@ public class ClienteServices
         var clienteSelecionado = SelecionarCliente(clientes);
         if (clienteSelecionado == null) return;
 
-        Console.WriteLine("Digite a opção que deseja editar\n1- Nome\n2- E-mail\n3- Telefone");
+        Console.WriteLine("Digite a opção que deseja editar\n1- Nome\n2- E-mail\n3- Telefone\n");
         int opcao = int.Parse(Console.ReadLine()!);
 
         switch (opcao)
