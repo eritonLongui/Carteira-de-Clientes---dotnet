@@ -4,7 +4,12 @@ namespace CarteiraDeClientes.Functions;
 
 public class ClienteServices
 {
-    static List<Cliente> clientes = new List<Cliente>();
+    static List<Cliente> clientes = RepositorioClientes.Carregar();
+
+    public List<Cliente> ObterClientes() // remover este método depois
+    {
+        return clientes;
+    }
 
     public void CadastrarCliente()
     {
@@ -60,6 +65,7 @@ public class ClienteServices
 
             ClientePf clientepf = new ClientePf(nomeCliente, emailCliente, telefoneCliente, "PF", nascimentoCliente, generoCliente);
             clientes.Add(clientepf);
+            RepositorioClientes.Salvar(clientes);
 
             Console.WriteLine("Cliente adicionado com sucesso!");
         }
@@ -102,6 +108,7 @@ public class ClienteServices
 
             ClientePj clientepj = new ClientePj(nomeEmpresa, emailEmpresa, telefoneEmpresa, "PJ", cnpjEmpresa, numeroFuncionarios);
             clientes.Add(clientepj);
+            RepositorioClientes.Salvar(clientes);
 
             Console.WriteLine("Cliente adicionado com sucesso!");
         }
@@ -114,6 +121,7 @@ public class ClienteServices
     public void ListarClientes()
     {
         Console.Clear();
+        clientes = RepositorioClientes.Carregar();
 
         int totalClientes = clientes.Count();
         Console.WriteLine($"Exibindo {totalClientes} clientes cadastrados:\n");
@@ -134,7 +142,7 @@ public class ClienteServices
     static Cliente SelecionarCliente(List<Cliente> clientes)
     {
         Console.Clear();
-        Console.WriteLine("Pesquisar cliente por:\n1- Nome\n2- E-mail\n3- Telefone\n\n");
+        Console.WriteLine("Pesquisar cliente por:\n1- Nome\n2- E-mail\n3- Telefone\n");
         string opcao = Console.ReadLine()!;
 
         if (opcao != "1" && opcao != "2" && opcao != "3")
@@ -225,6 +233,7 @@ public class ClienteServices
                 if (Console.ReadLine()! == "1")
                 {
                     clienteSelecionado.MudarNome(novoNome);
+                    RepositorioClientes.Salvar(clientes);
                 }
                 else
                 {
@@ -241,6 +250,7 @@ public class ClienteServices
                 if (Console.ReadLine()! == "1")
                 {
                     clienteSelecionado.Email = novoEmail;
+                    RepositorioClientes.Salvar(clientes);
                 }
                 else
                 {
@@ -257,6 +267,7 @@ public class ClienteServices
                 if (Console.ReadLine()! == "1")
                 {
                     clienteSelecionado.Telefone = novoTelefone;
+                    RepositorioClientes.Salvar(clientes);
                 }
                 else
                 {
@@ -278,6 +289,7 @@ public class ClienteServices
         if (Console.ReadLine()!.ToLower() == "y")
         {
             clientes.Remove(clienteSelecionado);
+            RepositorioClientes.Salvar(clientes);
             Console.WriteLine($"O cliente {clienteSelecionado} foi removido com sucesso!");
         }
     }

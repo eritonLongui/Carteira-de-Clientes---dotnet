@@ -1,0 +1,26 @@
+[
+  {
+    "Nome": "Jo\u00E3o Silva",
+    "Email": "joao@email.com",
+    "Telefone": "11999999999",
+    "Tipo": "PF",
+    "DataCadastro": "2025-11-19T00:10:14.0783356-03:00",
+    "HistoricoCompras": []
+  },
+  {
+    "Nome": "Empresa XPTO",
+    "Email": "contato@xpto.com",
+    "Telefone": "1144445555",
+    "Tipo": "PJ",
+    "DataCadastro": "2025-11-19T00:10:14.0816792-03:00",
+    "HistoricoCompras": []
+  },
+  {
+    "Nome": "cliente Teste",
+    "Email": "teste@cliente.com",
+    "Telefone": "99988887777",
+    "Tipo": "PF",
+    "DataCadastro": "2025-11-19T00:11:05.0391755-03:00",
+    "HistoricoCompras": []
+  }
+]
