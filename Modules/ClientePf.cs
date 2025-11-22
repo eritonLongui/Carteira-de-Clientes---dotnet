@@ -1,7 +1,10 @@
+using System.Text.Json.Serialization;
+
 namespace CarteiraDeClientes.Modules;
 
 public class ClientePf : Cliente
 {
+    [JsonPropertyName("Nascimento")]
     public string DataNascimento { get; set; }
     public string Genero { get; set; }
     // JokeAPI

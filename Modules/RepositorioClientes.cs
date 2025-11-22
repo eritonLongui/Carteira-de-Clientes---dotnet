@@ -1,4 +1,5 @@
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using CarteiraDeClientes.Modules;
 
 namespace CarteiraDeClientes.Functions;
@@ -29,7 +30,7 @@ public static class RepositorioClientes
 
             foreach (var item in doc.RootElement.EnumerateArray())
             {
-                string tipo = item.GetProperty("Tipo").GetString();
+                string? tipo = item.GetProperty("Tipo").GetString();
 
                 if (tipo == "PF")
                 {
@@ -62,8 +63,19 @@ public static class RepositorioClientes
                 WriteIndented = true,
                 TypeInfoResolver = ClienteContext.Default
             };
-            
-            string json = JsonSerializer.Serialize(clientes, options);
+
+            var array = new JsonArray();
+
+            foreach (var c in clientes)
+            {
+                // Serializa o objeto usando o tipo real
+                JsonNode? node = JsonSerializer.SerializeToNode(c, c.GetType(), options);
+
+                if (node != null)
+                    array.Add(node);
+            }
+
+            string json = array.ToJsonString(options);
             File.WriteAllText(CaminhoArquivo, json);
         }
         catch (Exception ex)

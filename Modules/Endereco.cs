@@ -3,19 +3,16 @@ using System.Text.Json.Serialization;
 
 public class Endereco
 {
-    [JsonPropertyName("cep")]
-    public string Cep { get; set; }
-    [JsonPropertyName("logradouro")]
-    public string Logradouro { get; set; }
-    [JsonPropertyName("bairro")]
-    public string Bairro { get; set; }
-    [JsonPropertyName("localidade")]
-    public string Localidade { get; set; }
-    [JsonPropertyName("uf")]
-    public string Uf { get; set; }
-
-    [JsonPropertyName("erro")]
-    public bool? Erro { get; set; }
+    [JsonPropertyName("Cep")]
+    public string? Cep { get; set; }
+    [JsonPropertyName("Logradouro")]
+    public string? Logradouro { get; set; }
+    [JsonPropertyName("Bairro")]
+    public string? Bairro { get; set; }
+    [JsonPropertyName("Localidade")]
+    public string? Localidade { get; set; }
+    [JsonPropertyName("Uf")]
+    public string? Uf { get; set; }
 
     private static readonly HttpClient _httpClient = new() { Timeout = TimeSpan.FromSeconds(10) };
 
@@ -43,9 +40,7 @@ public class Endereco
 
             var endereco = JsonSerializer.Deserialize<Endereco>(json, options);
 
-            // checar se a API retornou "erro"
             if (endereco == null) return null;
-            if (endereco.Erro == true) return null;
 
             return endereco;
         }

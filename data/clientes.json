@@ -1,42 +1,36 @@
 [
   {
-    "Nome": "Jo\u00E3o Santos",
+    "Nascimento": "1995-08-10",
+    "Genero": "Homem",
+    "Nome": "Jo\u00E3o Roberto",
     "Email": "joao@email.com",
     "Telefone": "11999999999",
     "Tipo": "PF",
-    "DataCadastro": "2025-11-19T00:28:05.8977267-03:00",
+    "DataCadastro": "2025-11-11T14:00:00",
+    "Endereco": {
+      "Cep": "99888-777",
+      "Logradouro": "Rua das Flores",
+      "Bairro": "Centro",
+      "Localidade": "S\u00E3o Paulo",
+      "Uf": "SP"
+    },
     "HistoricoCompras": []
   },
   {
+    "Cnpj": "12.345.678/0001-99",
+    "NumeroFuncionarios": 12,
     "Nome": "Empresa XPTO",
     "Email": "contato@xpto.com",
     "Telefone": "1144445555",
     "Tipo": "PJ",
-    "DataCadastro": "2025-11-19T00:28:05.900726-03:00",
-    "HistoricoCompras": []
-  },
-  {
-    "Nome": "Jo\u00E3o Silva",
-    "Email": "joao@email.com",
-    "Telefone": "11999999999",
-    "Tipo": "PF",
-    "DataCadastro": "2025-11-19T00:28:05.9008296-03:00",
-    "HistoricoCompras": []
-  },
-  {
-    "Nome": "Empresa XPTO",
-    "Email": "contato@xpto.com",
-    "Telefone": "1144445555",
-    "Tipo": "PJ",
-    "DataCadastro": "2025-11-19T00:28:05.9008408-03:00",
-    "HistoricoCompras": []
-  },
-  {
-    "Nome": "cliente Teste",
-    "Email": "teste@cliente.com",
-    "Telefone": "99988887777",
-    "Tipo": "PF",
-    "DataCadastro": "2025-11-19T00:28:05.9008479-03:00",
+    "DataCadastro": "2025-11-21T23:21:23.3778259-03:00",
+    "Endereco": {
+      "Cep": "99888-777",
+      "Logradouro": "Av. Paulista",
+      "Bairro": "Bela Vista",
+      "Localidade": "S\u00E3o Paulo",
+      "Uf": "SP"
+    },
     "HistoricoCompras": []
   }
 ]

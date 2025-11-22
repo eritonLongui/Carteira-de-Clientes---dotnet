@@ -228,7 +228,11 @@ public class ClienteServices
         if (clienteSelecionado == null) return;
 
         Console.WriteLine("Digite a opção que deseja editar\n1- Nome\n2- E-mail\n3- Telefone\n");
-        int opcao = int.Parse(Console.ReadLine()!);
+        if (!int.TryParse(Console.ReadLine(), out int opcao))
+        {
+            Console.WriteLine("Opção inválida");
+            return;
+        }
 
         switch (opcao)
         {
@@ -282,6 +286,9 @@ public class ClienteServices
                     Console.WriteLine("Alteração não realizada.");
                 }
 
+                break;
+            default:
+                Console.WriteLine("Opção inválida");
                 break;
         }
     }
